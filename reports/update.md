@@ -30,7 +30,9 @@ I’m interested in exploring the space of security research in general. I have 
 
 ## Progress
 
-So far we have made good progress in writing Windows executable functions. We are using mingw-w64 and the windows.h header file combined with Microsoft's documentation page: https://docs.microsoft.com/en-us/windows/win32/api/. We have successfully learned how to compile functions as Windows executables, and we have successfully implemented a function to read the contents of a directory in windows. With this we can easily find the file path of the specific file we want to modify. 
+So far we have made good progress in writing Windows executable functions. We are using mingw-w64 and the windows.h header file combined with Microsoft's documentation page: https://docs.microsoft.com/en-us/windows/win32/api/. We have successfully learned how to compile functions as Windows executables, and we have successfully implemented a function to read the contents of a directory in windows. With this we can easily find the file path of the specific file we want to modify.
+
+Another path for our project is to boot up Ubuntu using the flash drive, and the first step would be to mount the file system from there. With using `system()` to use a command to obtain the partition information, and redirecting its output to a `.txt` file to be read by the program, we are able to search for the required partition address for the "Windows basic data" partition, mount it, and read its contents. This has all been successfully implemented. From then on, we would be able to manipulate what is on the user's Windows partition for our project plan.
 
 ## Next Steps
 
