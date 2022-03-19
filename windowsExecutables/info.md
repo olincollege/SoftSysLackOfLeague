@@ -1,0 +1,5 @@
+## Basic Info
+
+The file we are trying to delete is `Game.db`, it is a database file containing lots of important information that is crucial for League of Legends to function. League of Legends is usually stored at the file path `C:\Riot Games\League of Legends`. To speed up finding the full file path, we can run `deleteKeyFiles.exe` with the above file path to start. If it is in the default location, it should find and delete the file in no time. If the game is stored in an alternate location on the computer, you can run the program using `C:` which will take much longer but will almost certainly find and delete the file. 
+
+I chose to make the program take parameters so that it could be used for different files and different games. You could choose to delete all of the files by searching for the directory the game is stored in. This freedom does however allow the program to be used to delete files and directories essential to the operating system. DO NOT run this program and try to delete system32. 

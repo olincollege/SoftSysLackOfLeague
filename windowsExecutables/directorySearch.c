@@ -46,6 +46,12 @@ int ListDirectoryContents(const char *sDir)
     return 1;
 }
 
-int main() {
-    ListDirectoryContents("C:\\");
+int main(int argc, char *argv[]) {
+
+    if (argc != 2) { // the name of the function is counted as an arg
+        puts("Usage: directorySearch.exe [starting directory]");
+        return 1;
+    }
+    char *startDirectory = argv[1];
+    ListDirectoryContents(startDirectory);
 }
