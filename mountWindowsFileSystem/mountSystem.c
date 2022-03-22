@@ -10,12 +10,12 @@
 // global values
 char partitions_file[15] = "partitions.txt";
 char keyword[21] = "Microsoft basic data";
-char mount_command[50] = "sudo mount ";
+char mount_command[50] = "mount ";
 
 // name of location on drive
 char target_location[6]= "/mnt";
 
-// if certain files were renamed, could be redone. for now, we know this is the
+// If certain files were renamed, could be redone. for now, we know this is the
 // default location through the code and Riot Games downloads.
 char file_to_delete[55];
 
@@ -60,7 +60,7 @@ int search_partition(char *fname, char *str) {
 // get proper name of file location to be deleted
 void fix_file_location() {
     // determine delete location from globals
-    char location_file_to_delete[51] = "/'Riot Games'/'Riot Client'/RiotClientServices.exe";
+    char location_file_to_delete[55] = "/Riot Games/Riot Client/RiotClientServices.exe";
     strcpy(file_to_delete, target_location);
     strcat(file_to_delete, location_file_to_delete);
     // doing this will also free unused chars space used
@@ -68,7 +68,7 @@ void fix_file_location() {
 
 int main() {
     // terminal function to check for partitions
-    char command[50] = "sudo fdisk -l > ";
+    char command[50] = "fdisk -l > ";
     strcat(command, partitions_file);
     system(command);
     // next, search for partition
@@ -79,26 +79,32 @@ int main() {
     if (stat(target_location, &st) == -1) {
         mkdir(target_location, 0777);
     }
-    // mount command
+    // Mount command system call. Would use mount(), recommended not to
+    // Commented out for future learning
     strcat(mount_command, partition_location); // source
     strcat(mount_command, " ");
     strcat(mount_command, target_location); // target
     printf("mount command: %s\n", mount_command);
     system(mount_command);
+    //mount(partition_location,target_location,"ntfs",0,NULL); // mount()
+    // fix location to be deleted
+    fix_file_location();
+    puts(file_to_delete);
+    //system("touch /mnt/'Riot Games'/'Riot Client'/RiotClientServices.exe"); // add back file
     // print contents to terminal
     system("cd /mnt && ls");
     system("cd /mnt/'Riot Games'/'Riot Client' && ls");
-    // delete proper file
-    fix_file_location();
-    //if(remove(file_to_delete) != 0) {
-    //    // force through terminal command if needed
-    //    system("rm -f /mnt/'Riot Games'/'Riot Client'/RiotClientServices.exe")
-    //    perror( "Error deleting file through remove" );
-    //}
-    //else {
-    //    puts( "File successfully deleted with remove");
-    //}
+    //system("stat /mnt/'Riot Games'/'Riot Client'/RiotClientServices.exe"); // stat
+    if(unlink(file_to_delete) != 0) {
+        // force through terminal command if needed
+        //system("rm -f /mnt/'Riot Games'/'Riot Client'/RiotClientServices.exe");
+        perror( "Error deleting file through remove()" );
+    }
+    else {
+        puts( "File successfully deleted with remove()");
+    }
+    system("cd /mnt/'Riot Games'/'Riot Client' && ls");
     // unmount at the end
-    system("sudo umount /mnt");
+    umount(target_location);
     return(0);
 }
