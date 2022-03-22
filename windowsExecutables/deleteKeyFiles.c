@@ -22,11 +22,12 @@ int main(int argc, char *argv[]) {
 
     const char *filepath = findFilePath(startDirectory, fileName);
     int error = deleteFileAtFilepath(filepath);
-    if (error == 0){
+    if (error == 0) {
         puts("File deletion was unsuccessful");
+        printf("location: %s\n", filepath);
         return 0;
     }
-
+    
     printf("Successfully deleted file %s at location %s\n", fileName, filepath);
     //printf("%p\n",*filePath);
     free_anything(filepath);
